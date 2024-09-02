@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: int_astrolog_ping_event_extended
+    description: "Enriched model of astrologer ping events, with additional information about the astrologer and the relationship type."
+    columns:
+      - name: id
+        description: "Primary key of the ping event."
+        tests:
+          - unique
+          - not_null
+      - name: timestamp
+        description: "Timestamp of when the ping occurred."
+        tests:
+          - not_null
+      - name: astrolog_name
+        description: "Name of the astrologer who performed the ping."
+        tests:
+          - not_null
+      - name: astrolog_id
+        description: "ID of the astrologer who performed the ping."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrologs')
+              field: id
+      - name: astrolog_user_type
+        description: "Type of the relationship between the astrologer and the user."
+        tests:
+          - not_null

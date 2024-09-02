@@ -1,0 +1,6 @@
+dbt-sqlite
+numpy
+scikit-learn
+pandas
+matplotlib
+tenacity

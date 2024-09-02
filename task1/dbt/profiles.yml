@@ -1,0 +1,11 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: sqlite
+      threads: 1
+      database: task1_db
+      schema: 'main'
+      schemas_and_paths:
+        main: '../task1.db'
+      schema_directory: '/'

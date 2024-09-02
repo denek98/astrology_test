@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: astrologs_activity
+    description: "Aggregated data on astrologers' daily ping activity and successful chat sessions."
+    columns:
+      - name: astrolog_id
+        description: "ID of the astrologer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrologs')
+              field: id
+      - name: astrolog_name
+        description: "Name of the astrologer."
+        tests:
+          - not_null
+      - name: ping_day
+        description: "Day of the ping event."
+        tests:
+          - not_null
+      - name: pings_count
+        description: "Total number of pings made by the astrologer on the specified day."
+        tests:
+          - not_null
+      - name: successful_sessions
+        description: "Number of successful chat sessions resulting from pings."
+        tests:
+          - not_null
+
+  - name: pings_amount
+    description: "Aggregated count of pings per day."
+    columns:
+      - name: ping_day
+        description: "Day of the ping event."
+        tests:
+          - not_null
+      - name: ping_amount
+        description: "Total number of pings made on the specified day."
+        tests:
+          - not_null
+
+  - name: pings_chat_duration
+    description: "Average duration and revenue of chat sessions that originated from pings."
+    columns:
+      - name: avg_duration
+        description: "Average duration of chat sessions originating from pings."
+        tests:
+          - not_null
+      - name: avg_revenue
+        description: "Average revenue from chat sessions originating from pings."
+        tests:
+          - not_null
+
+  - name: pings_conversion
+    description: "Conversion rate of pings to successful chat sessions by astrologer."
+    columns:
+      - name: astrolog_id
+        description: "ID of the astrologer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrologs')
+              field: id
+      - name: astrolog_name
+        description: "Name of the astrologer."
+        tests:
+          - not_null
+      - name: conversion_rate
+        description: "Conversion rate of pings to successful chat sessions."
+        tests:
+          - not_null
+
+  - name: user_type_conversion
+    description: "Conversion rate of pings to successful chat sessions by user type."
+    columns:
+      - name: user_type
+        description: "Type of the user in relation to the astrologer."
+        tests:
+          - not_null
+      - name: conversion_rate
+        description: "Conversion rate of pings to successful chat sessions by user type."
+        tests:
+          - not_null

@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: raw_astrologs
+    description: "Contains information about astrologers."
+    columns:
+      - name: id
+        description: "Primary key of the astrologer."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Name of the astrologer."
+        tests:
+          - not_null
+
+  - name: raw_users
+    description: "Contains information about users."
+    columns:
+      - name: id
+        description: "Primary key of the user."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Name of the user."
+        tests:
+          - not_null
+
+  - name: raw_astrolog_user_ref
+    description: "Links astrologers with users, includes user type and creation timestamp."
+    columns:
+      - name: id
+        description: "Primary key for this relationship."
+        tests:
+          - unique
+          - not_null
+      - name: astrolog
+        description: "Foreign key to the astrologer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrologs')
+              field: id
+      - name: user
+        description: "Foreign key to the user."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_users')
+              field: id
+      - name: astrolog_user_type
+        description: "Type of the relationship between the user and the astrologer."
+        tests:
+          - not_null
+      - name: created_at
+        description: "Timestamp of when the relationship was created."
+        tests:
+          - not_null
+
+  - name: raw_astrolog_ping_events
+    description: "Records events when astrologers ping users."
+    columns:
+      - name: id
+        description: "Primary key of the ping event."
+        tests:
+          - unique
+          - not_null
+      - name: timestamp
+        description: "Timestamp of when the ping occurred."
+        tests:
+          - not_null
+      - name: astrolog_user
+        description: "Foreign key linking to the astrologer-user relationship."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrolog_user_ref')
+              field: id
+
+  - name: raw_chat_events
+    description: "Records chat sessions between users and astrologers."
+    columns:
+      - name: id
+        description: "Primary key of the chat event."
+        tests:
+          - unique
+          - not_null
+      - name: timestamp
+        description: "Timestamp of when the chat occurred."
+        tests:
+          - not_null
+      - name: user
+        description: "Foreign key to the user."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_users')
+              field: id
+      - name: astrolog
+        description: "Foreign key to the astrologer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('raw_astrologs')
+              field: id
+      - name: ping_event
+        description: "Foreign key to the ping event that triggered the chat (can be NULL)."
+        tests:
+          - relationships:
+              to: ref('raw_astrolog_ping_events')
+              field: id
+      - name: duration
+        description: "Duration of the chat in minutes."
+        tests:
+          - not_null
+      - name: revenue
+        description: "Revenue generated from the chat session."
+        tests:
+          - not_null
