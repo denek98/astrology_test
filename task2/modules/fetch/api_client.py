@@ -16,7 +16,7 @@ class APIClient:
         """
         self._REQUEST_HEADERS = {"apikey": apikey}
 
-    @retry(stop=stop_after_attempt(5), wait=wait_fixed(2))
+    @retry(stop=stop_after_attempt(10), wait=wait_fixed(5))
     def _make_request(self, url: str, params: CurrencyRateParams) -> dict:
         """
         Sends a GET request to the specified URL with the provided parameters.
@@ -41,6 +41,6 @@ class APIClient:
         """
         try:
             return self._make_request(url, params)
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             print(f"All retry attempts failed. Error: {e}")
             return None

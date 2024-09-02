@@ -55,3 +55,5 @@ The output will be a printed forecast in the console and a plot similar to the o
 
 - **Blue Line**: Actual exchange rates.
 - **Red Line**: Forecasted exchange rates.
+
+![Plot](./plot.png)
